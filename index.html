@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANNIVERSARY 3 MONTHS !</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe0f0;
+            color: #ff69b4;
+            margin: 0;
+            padding: 20px; /* Thêm padding để có khoảng trống xung quanh nội dung */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Xếp các item theo cột */
+            align-items: center; /* Căn giữa theo chiều ngang (cross-axis) */
+            overflow-x: hidden; /* Ngăn cuộn ngang */
+            overflow-y: auto;   /* Cho phép cuộn dọc khi cần */
+            box-sizing: border-box; /* Tính padding vào tổng kích thước */
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: fit-content; /* Điều chỉnh chiều rộng để vừa với nội dung hoặc max-width */
+            transition: all 0.5s ease-in-out;
+            position: relative;
+            margin: auto; /* Căn giữa container theo chiều ngang và tạo khoảng trống tự động */
+            flex-shrink: 0; /* Ngăn container bị co lại */
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ff1493;
+        }
+
+        .arrow-button {
+            background: none;
+            border: none;
+            font-size: 4em;
+            color: #ff69b4;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+            outline: none;
+            padding: 10px;
+            display: block;
+            margin: 0 auto; /* Căn giữa mũi tên */
+        }
+
+        .arrow-button:hover {
+            transform: translateY(5px);
+            color: #ff1493;
+        }
+
+        .cute-text {
+            font-size: 1.2em;
+            color: #ff69b4;
+            margin-top: 10px;
+        }
+
+        #videoContainer {
+            display: none; /* Ẩn theo mặc định */
+            margin-top: 20px;
+            max-width: 100%;
+            position: relative;
+            padding-bottom: 56.25%; /* Tỷ lệ khung hình 16:9 cho video nhúng */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        #myVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        #finalImage {
+            display: none; /* Ẩn theo mặc định */
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: block; /* Đảm bảo nó là block element để margin: auto hoạt động */
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <h1>Hilu Phạm Hương Giang nhaaa!</h1>
+
+        <button class="arrow-button" id="firstArrow">&#x2193;</button>
+        <p class="cute-text" id="firstText">Em bấm vào đây điii!</p>
+
+        <div id="videoContainer">
+            <video id="myVideo" controls preload="auto" playsinline muted> <source src="video1.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ thẻ video.
+            </video>
+        </div>
+
+        <button class="arrow-button" id="secondArrow" style="display: none;">&#x2193;</button>
+        <p class="cute-text" id="secondText" style="display: none;">Cái cuối cùng nìe!</p>
+
+        <img id="finalImage" src="anh1.png" alt="Ảnh cuối cùng của bạn">
+    </div>
+
+    <script>
+        const firstArrow = document.getElementById('firstArrow');
+        const firstText = document.getElementById('firstText');
+        const videoContainer = document.getElementById('videoContainer');
+        const myVideo = document.getElementById('myVideo');
+        const secondArrow = document.getElementById('secondArrow');
+        const secondText = document.getElementById('secondText');
+        const finalImage = document.getElementById('finalImage');
+        const mainContainer = document.getElementById('mainContainer');
+
+        // Hàm để hiển thị lỗi trong Console (để dễ debug hơn)
+        function logError(message) {
+            console.error("Lỗi: " + message);
+        }
+
+        // --- Trạng thái ban đầu: chỉ mũi tên và chữ đầu tiên hiển thị ---
+        // Đảm bảo tất cả các phần tử khác đều ẩn
+        videoContainer.style.display = 'none';
+        secondArrow.style.display = 'none';
+        secondText.style.display = 'none';
+        finalImage.style.display = 'none';
+
+        // --- Logic khi bấm mũi tên đầu tiên ---
+        firstArrow.addEventListener('click', () => {
+            console.log("Mũi tên đầu tiên được bấm.");
+            firstArrow.style.display = 'none';
+            firstText.style.display = 'none';
+            videoContainer.style.display = 'block'; // Hiển thị vùng chứa video
+            
+            // Cố gắng phát video
+            myVideo.play()
+                .then(() => {
+                    console.log("Video đang phát.");
+                })
+                .catch(error => {
+                    logError("Không thể phát video: " + error.message + ". Có thể do chính sách tự động phát của trình duyệt hoặc tệp video.");
+                    // Bạn có thể hiển thị một thông báo cho người dùng ở đây nếu muốn
+                    // Ví dụ: alert("Video không thể phát. Vui lòng kiểm tra lại tệp video hoặc trình duyệt.");
+                });
+        });
+
+        // --- Logic khi video kết thúc ---
+        myVideo.addEventListener('ended', () => {
+            console.log("Video đã kết thúc.");
+            videoContainer.style.display = 'none'; // Ẩn video
+            secondArrow.style.display = 'block'; // Hiển thị mũi tên thứ hai
+            secondText.style.display = 'block'; // Hiển thị chữ đi kèm mũi tên thứ hai
+            // Điều chỉnh kích thước container sau khi video ẩn (nếu cần thiết, thường là tự động)
+            mainContainer.style.height = 'auto';
+        });
+
+        // --- Logic khi bấm mũi tên thứ hai ---
+        secondArrow.addEventListener('click', () => {
+            console.log("Mũi tên thứ hai được bấm.");
+            secondArrow.style.display = 'none';
+            secondText.style.display = 'none';
+            finalImage.style.display = 'block'; // Hiển thị ảnh cuối cùng
+            // Tùy chọn điều chỉnh kích thước container cho phù hợp với hình ảnh
+            mainContainer.style.height = 'auto';
+        });
+
+        // Tùy chọn: Tải trước video để tránh độ trễ trên một số trình duyệt
+        window.addEventListener('load', () => {
+            console.log("Trang đã tải xong.");
+            myVideo.load();
+        });
+
+    </script>
+
+</body>
+</html>
